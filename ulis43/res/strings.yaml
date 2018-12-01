@@ -1,0 +1,17 @@
+---
+  SKILLS:
+    - REPAIRING
+    - COOKING
+    - FARMING
+    - CHEMISTRY
+  RESSOURCES:
+    - WATER
+    - OXYGEN
+    - FOOD
+  STATE:
+    - NOMINAL
+    - ON_FIRE
+    - FLOODED
+    - BREACHED
+    - OUT_OF_SERVICE
+...

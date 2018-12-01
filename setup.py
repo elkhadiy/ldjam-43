@@ -2,7 +2,8 @@ from setuptools import setup, find_packages
 from ulis43 import __version__
 
 install_requires = [
-    'pygame>=1.9.4'
+    'pygame>=1.9.4',
+    'pyyaml>=3.13'
 ]
 
 setup(
