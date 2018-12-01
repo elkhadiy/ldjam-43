@@ -7,6 +7,12 @@ class CrewMember():
         self.state = state
         self.stats = stats
 
+    def tick(self, global_ressources):
+        return global_ressources
+
+    def draw(self, ctx):
+        pass
+
     def __repr__(self):
         return """Name: {}
         Skills: {}

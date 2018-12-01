@@ -50,6 +50,7 @@ class Game:
 
             crewmember_skills = dict.fromkeys(skills, 0)
             skill2distrib = list(skills)
+            random.shuffle(skill2distrib)
 
             total_points = random.randint(50, 200)
             dominant = skills[random.randint(0, len(skills) - 1)]
@@ -60,7 +61,7 @@ class Game:
 
             for skill in skill2distrib:
                 if len(skill2distrib) > 1:
-                    crewmember_skills[skill] = total_points * random.random()
+                    crewmember_skills[skill] = min(total_points * random.random(), 100)
                     total_points = max(0, total_points - crewmember_skills[skill])
                     skill2distrib.remove(skill)
                 else:
@@ -71,7 +72,7 @@ class Game:
             stats = dict.fromkeys(res_types, 100)
             stats["hp"] = 100
             stats["shape"] = shapes[random.randint(0, len(shapes) - 1)]
-            stats["velocity"] = 1.0 # m/s
+            stats["velocity"] = 1.0  # m/s
 
             # consumption
 
@@ -99,6 +100,9 @@ class Game:
             crew=crew,
             rooms=rooms
         )
+
+    def tick(self):
+        self.spaceship.tick()
 
     def __repr__(self):
         return "Spaceship: {}\n".format(self.spaceship)
