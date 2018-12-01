@@ -1,7 +1,7 @@
 ---
   difficulty:
     easy:
-      crew_size: 100
+      crew_size: 10
       rooms:
         - type: WATER_PLANT
           capacity: 5

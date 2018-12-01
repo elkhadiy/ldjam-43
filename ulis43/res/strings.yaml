@@ -20,4 +20,8 @@
     - FARMING_PLANT
     - MACHINE_ROOM
     - HQ
+  SHAPE:
+    - BIG
+    - MUSCULAR
+    - SKINNY
 ...
