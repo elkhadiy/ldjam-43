@@ -1,0 +1,40 @@
+---
+  difficulty:
+    easy:
+      crew_size: 100
+      rooms:
+        - type: WATER_PLANT
+          capacity: 5
+          hp: 100
+          efficiency: 100
+          state: "NOMINAL"
+
+        - type: OXYGEN_PLANT
+          capacity: 5
+          hp: 100
+          efficiency: 100
+          state: "NOMINAL"
+
+        - type: FARMING_PLANT
+          capacity: 5
+          hp: 100
+          efficiency: 100
+          state: "NOMINAL"
+
+        - type: MACHINE_ROOM
+          capacity: 5
+          hp: 100
+          efficiency: 100
+          state: "NOMINAL"
+
+        - type: HQ
+          capacity: 5
+          hp: 100
+          efficiency: 100
+          state: "NOMINAL"
+
+      ressources:
+        - OXYGEN: 100
+        - WATER: 100
+        - FOOD: 100
+...

@@ -14,4 +14,10 @@
     - FLOODED
     - BREACHED
     - OUT_OF_SERVICE
+  ROOM_TYPE:
+    - WATER_PLANT
+    - OXYGEN_PLANT
+    - FARMING_PLANT
+    - MACHINE_ROOM
+    - HQ
 ...
