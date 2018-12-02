@@ -7,6 +7,7 @@ class AssetManager(object):
             self.images = {}
             self.sounds = {}
             self.musics = {}
+            self.fonts = {}
 
             self.currentMusic = None
 
@@ -17,6 +18,8 @@ class AssetManager(object):
             # Reserve one channel for music
             pygame.mixer.set_reserved(1)
 
+            pygame.font.init()
+
         def loadImage(self, name, path):
             self.images[name] = pygame.image.load( str(ulis43.basedir / "res" / "images" / path) ).convert()
 
@@ -25,6 +28,9 @@ class AssetManager(object):
 
         def loadMusic(self, name, path):
             self.musics[name] = pygame.mixer.music( str(ulis43.basedir / "res" / "musics" / path) )
+
+        def loadFont(self, name, path, size):
+            self.fonts[name] = pygame.font.Font(str(ulis43.basedir / "res" / "fonts" / path), size)
 
 
         def playMusic(self, name):
@@ -38,6 +44,9 @@ class AssetManager(object):
 
         def getImage(self, name):
             return self.images[name]
+
+        def getFont(self, name):
+            return self.fonts[name]
 
     instance = None
 
