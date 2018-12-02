@@ -12,8 +12,9 @@ class Window():
         pygame.init()
         self.window = pygame.display.set_mode((800, 600))
 
-        AssetManager().loadImage("water", "rooms/water.png")
-        AssetManager().loadImage("farm", "rooms/farm.png")
+        AssetManager().loadImage("water", "rooms/Water.png")
+        AssetManager().loadImage("farm", "rooms/Farm.png")
+        AssetManager().loadImage("electricity", "rooms/Electricity.png")
 
 
         res_folder = ulis43.basedir / "res"
