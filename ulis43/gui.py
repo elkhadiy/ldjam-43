@@ -11,7 +11,7 @@ def run():
     g = Game()
     window = Window()
 
-    delta = 1000
+    delta = 0
     while True:
         before = pygame.time.get_ticks()
         while delta > 1000:

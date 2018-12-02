@@ -15,13 +15,10 @@ class Window():
 
         AssetManager().loadFont("vera", "Vera/VeraMoBd.ttf", 16)
 
-    def draw(self, game):
+    def draw(self, game, delta=None):
 
         self.window.fill((0, 0, 0))
 
-        textsurface = AssetManager().getFont("vera").render(
-            str(game.spaceship.ressources), False, (255, 255, 255)
-            )
-        self.window.blit(textsurface, (0, 0))
+        game.draw(self.window)
 
         pygame.display.flip()

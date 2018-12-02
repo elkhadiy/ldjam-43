@@ -105,5 +105,8 @@ class Game:
         self.spaceship.tick()
         print(self.spaceship.ressources)
 
+    def draw(self, ctx):
+        pass
+
     def __repr__(self):
         return "Spaceship: {}\n".format(self.spaceship)
