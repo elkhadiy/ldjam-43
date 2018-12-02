@@ -1,20 +1,62 @@
 ---
-  skin:
-    1: !!python/tuple [232,202,179]
-    2: !!python/tuple [221,181,148]
-    3: !!python/tuple [197,164,126]
-    4: !!python/tuple [196,144,124]
-    5: !!python/tuple [148,95,81]
+  images:
+    heads:
+      - 1
+    hairs:
+      - F_1
+      - F_2
+      - M_1
+      - M_2
+      - M_3
+    bodies:
+      - Skinny
+      - Big
+      - Muscular
+    skills:
+      - Chemist_1
+      - Chef_1
+      - Chef_2
+      - Engineer_1
+      - Engineer_2
+      - Farmer_1
 
-  eye:
-    1: !!python/tuple [99,78,52]
-    2: !!python/tuple [46,83,111]
-    3: !!python/tuple [61,103,29]
 
-  hair:
-    1: !!python/tuple [224,97,97]
-    2: !!python/tuple [234,224,57]
-    3: !!python/tuple [0,255,0]
-    4: !!python/tuple [25,25,25]
-    5: !!python/tuple [225,225,225]
+  skills:
+    CHEMISTRY:
+      - Chemist_1
+    COOKING:
+      - Chef_1
+      - Chef_2
+    ENGINEERING:
+      - Engineer_1
+      - Engineer_2
+    FARMING:
+      - Farmer_1
+
+
+  colors:
+    skin:
+      - [232,202,179]
+      - [221,181,148]
+      - [197,164,126]
+      - [196,144,124]
+      - [148,95,81]
+
+    eye:
+      - [99,78,52]
+      - [46,83,111]
+      - [61,103,29]
+
+    hair:
+      - [224,97,97]
+      - [234,224,57]
+      - [0,255,0]
+      - [25,25,25]
+      - [225,225,225]
+
+    skills:
+      CHEMISTRY: [225,225,225]
+      COOKING: [225,225,225]
+      ENGINEERING: [255,149,0]
+      FARMING: [148,125,81]
 ...

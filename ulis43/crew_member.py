@@ -1,3 +1,9 @@
+import yaml
+import random
+
+import ulis43
+from ulis43.asset_manager import AssetManager
+
 class CrewMember():
 
     def __init__(self, name, stats, skills, consumption, state):
@@ -6,6 +12,31 @@ class CrewMember():
         self.consumption = consumption
         self.state = state
         self.stats = stats
+
+        self.pos = (random.randint(0,500), random.randint(0,500))
+
+        self.bodyparts = {}
+
+
+        dominant_skill = max(skills, key=skills.get)
+
+        res_folder = ulis43.basedir / "res"
+        crew_appearance_file = res_folder / "crew_appearance.yaml"
+        with crew_appearance_file.open() as f:
+            crew_appearance = yaml.safe_load(f)
+
+
+
+        self.bodyparts["skill"] = "skills_" + random.choice(crew_appearance["skills"][dominant_skill])
+
+        self.bodyparts["body"] = "Skinny"
+        self.bodycolor = crew_appearance["colors"]["skills"][dominant_skill]
+
+        self.bodyparts["head"] = "heads_1"
+        self.skincolor = random.choice(crew_appearance["colors"]["skin"])
+
+        self.bodyparts["hair"] = "hairs_" +  random.choice(crew_appearance["images"]["hairs"])
+        self.haircolor = random.choice(crew_appearance["colors"]["hair"])
 
     def tick(self, global_ressources):
         if self.state != "NOMINAL":
@@ -21,7 +52,11 @@ class CrewMember():
         return global_ressources
 
     def draw(self, ctx):
-        pass
+
+
+        ctx.blit(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.pos)
+        ctx.blit(AssetManager().getColoredImage(self.bodyparts["hair"], self.haircolor), self.pos)
+        ctx.blit(AssetManager().getImage(self.bodyparts["skill"]), self.pos)
 
     def __repr__(self):
         return """Name: {}
