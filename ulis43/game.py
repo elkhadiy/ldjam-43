@@ -56,7 +56,7 @@ class Game:
             random.shuffle(positions)
 
         for i, room in enumerate(rooms):
-            room.x, room.y = positions[i]
+            room.pos = tuple(p * 100 for p in positions[i])
 
         # Crew
 

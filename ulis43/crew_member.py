@@ -12,10 +12,8 @@ class CrewMember():
         self.consumption = consumption
         self.state = state
         self.stats = stats
-        self.x = 0
-        self.y = 0
 
-        self.pos = (random.randint(0,500), random.randint(0,500))
+        self.pos = (0, 0)
 
         self.bodyparts = {}
 

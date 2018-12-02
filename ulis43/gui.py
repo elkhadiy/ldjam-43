@@ -11,11 +11,17 @@ def run():
     g = Game()
     window = Window()
 
+    for room in g.spaceship.rooms:
+        print(room.type, ":")
+        for p in room.staff:
+            print("\t", p.name, ":", p.skills)
+
     delta = 0
     while True:
         before = pygame.time.get_ticks()
         while delta > 1000:
             g.tick()
+            print(g.spaceship.ressources)
             delta -= 1000
         window.draw(g)
         exectime = pygame.time.get_ticks() - before

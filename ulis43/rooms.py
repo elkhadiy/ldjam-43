@@ -1,5 +1,8 @@
 import random
 
+from ulis43.asset_manager import AssetManager
+
+
 class Room():
 
     def __init__(self, type, capacity, hp, efficiency, state="NOMINAL"):
@@ -16,17 +19,15 @@ class Room():
         }
         # not a set because too lazy to make hashable stuff
         self.staff = []
-        self.x = 0
-        self.y = 0
+        self.pos = (0, 0)
 
-    def add_crew_member(self, crew_member, x=None, y=None):
+    def add_crew_member(self, crew_member, pos=None):
         if len(self.staff) < self.capacity or self.type == "HQ":
-            if x and y:
-                crew_member.x = x
-                crew_member.y = y
+            if pos:
+                crew_member.pos = pos
             else:
-                crew_member.x = random.randint(self.x, self.x + 100)
-                crew_member.y = random.randint(self.y, self.y + 100)
+                crew_member.pos = (random.randint(self.pos[0], self.pos[0] + 100),
+                                   random.randint(self.pos[1], self.pos[1] + 100))
             self.staff.append(crew_member)
 
         return len(self.staff) < self.capacity
@@ -207,7 +208,7 @@ class Room():
         return global_ressources
 
     def draw(self, ctx):
-        pass
+        ctx.blit(AssetManager().getImage(self.type), self.pos)
 
     def __repr__(self):
         return """Type: {}

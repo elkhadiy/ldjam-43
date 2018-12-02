@@ -9,7 +9,7 @@
           efficiency: 100
           state: "NOMINAL"
 
-        - type: ELECTRIC_PLANT
+        - type: ELECTRICAL_PLANT
           capacity: 5
           hp: 100
           efficiency: 100
