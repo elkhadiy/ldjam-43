@@ -9,9 +9,9 @@
       - M_2
       - M_3
     bodies:
-      - Skinny
-      - Big
-      - Muscular
+      - SKINNY
+      - BIG
+      - MUSCULAR
     skills:
       - Chemist_1
       - Chef_1

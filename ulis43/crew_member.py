@@ -38,6 +38,9 @@ class CrewMember():
         self.bodyparts["hair"] = "hairs_" +  random.choice(crew_appearance["images"]["hairs"])
         self.haircolor = random.choice(crew_appearance["colors"]["hair"])
 
+        self.bodyparts["body"] = "bodies_" + self.stats["shape"]
+        self.skillcolor = crew_appearance["colors"]["skills"][dominant_skill]
+
     def tick(self, global_ressources):
         if self.state != "NOMINAL":
             self.stats["hp"] -= 1
@@ -53,7 +56,7 @@ class CrewMember():
 
     def draw(self, ctx):
 
-
+        ctx.blit(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["hair"], self.haircolor), self.pos)
         ctx.blit(AssetManager().getImage(self.bodyparts["skill"]), self.pos)
