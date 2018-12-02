@@ -106,7 +106,7 @@ class Game:
         print(self.spaceship.ressources)
 
     def draw(self, ctx):
-        pass
+        self.spaceship.draw(ctx)
 
     def __repr__(self):
         return "Spaceship: {}\n".format(self.spaceship)
