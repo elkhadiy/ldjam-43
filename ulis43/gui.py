@@ -1,6 +1,7 @@
 import random
 import datetime
 import pygame.time
+from pygame.locals import *
 
 from ulis43.game import Game
 from ulis43.window import Window
@@ -17,7 +18,12 @@ def run():
             print("\t", p.name, ":", p.skills)
 
     delta = 0
-    while True:
+    quit = False
+    while not quit:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                quit = True
+
         before = pygame.time.get_ticks()
         while delta > 1000:
             g.tick()
