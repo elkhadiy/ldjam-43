@@ -35,7 +35,7 @@ class Game:
         # simple random walk from last node (snake layout)
         # (could be better by keeping track of all possible placements)
 
-        positions = [(random.randint(0, 5), random.randint(0, 5))]
+        positions = [(random.randint(2, 5), random.randint(2, 5))]
 
         for _ in range(len(rooms) - 1):
             adjacents = [
