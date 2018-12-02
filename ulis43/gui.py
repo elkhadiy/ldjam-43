@@ -1,22 +1,9 @@
 import random
 import datetime
-import multiprocessing
-import time
+import pygame.time
 
 from ulis43.game import Game
 from ulis43.window import Window
-
-
-def logic_worker(g):
-    while True:
-        g.tick()
-        # print(g.spaceship.ressources)
-        time.sleep(1)
-
-
-def draw_worker(window, g):
-    while True:
-        window.draw(g)
 
 
 def run():
@@ -24,11 +11,16 @@ def run():
     g = Game()
     window = Window()
 
-    logic_job = multiprocessing.Process(target=logic_worker, args=(g,))
-    draw_job = multiprocessing.Process(target=draw_worker, args=(window, g))
-
-    logic_job.start()
-    draw_job.start()
+    delta = 1000
+    while True:
+        before = pygame.time.get_ticks()
+        while delta > 1000:
+            g.tick()
+            delta -= 1000
+        window.draw(g)
+        exectime = pygame.time.get_ticks() - before
+        pygame.time.delay(17 - exectime)
+        delta += max(exectime, 17)
 
 
 if __name__ == '__main__':
