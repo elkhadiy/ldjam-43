@@ -39,6 +39,16 @@ class AssetManager(object):
         def getImage(self, name):
             return self.images[name]
 
+        def getColoredImage(self, name, color):
+            image = self.images[name]
+            w, h = surface.get_size()
+            for x in range(w):
+                for y in range(h):
+                    prev = image.get_at((x, y))
+                    image.set_at((x, y), prev * pygame.Color(color))
+
+            return image
+
     instance = None
 
     def __new__(cls): # __new__ always a classmethod
