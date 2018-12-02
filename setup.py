@@ -25,7 +25,8 @@ setup(
     install_requires=install_requires,
     entry_points={
         'console_scripts': [
-            'ulis43=ulis43.cli:run'
+            'ulis43-cli=ulis43.cli:run',
+            'ulis43=ulis43.gui:run'
         ]
     }
 )
