@@ -1,6 +1,6 @@
 ---
   SKILLS:
-    - REPAIRING
+    - ENGINEERING
     - COOKING
     - FARMING
     - CHEMISTRY
@@ -8,6 +8,7 @@
     - WATER
     - OXYGEN
     - FOOD
+    - ELECTRICITY
   STATE:
     - NOMINAL
     - ON_FIRE
@@ -18,6 +19,7 @@
     - WATER_PLANT
     - OXYGEN_PLANT
     - FARMING_PLANT
+    - ELECTRICAL_PLANT
     - MACHINE_ROOM
     - HQ
   SHAPE:
