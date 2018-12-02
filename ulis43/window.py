@@ -15,7 +15,10 @@ class Window():
 
         AssetManager().loadImage("body_1", "crews/bodies/Skinny.png")
 
+        AssetManager().loadFont("vera", "VeraMono.ttf", 30)
+
     def draw(self, game):
+
         water = AssetManager().getImage("water")
         farm = AssetManager().getImage("farm")
         for j in range(0, 5):
@@ -24,5 +27,8 @@ class Window():
 
         body = AssetManager.getImageColored("body_1", (255,0,0))
 
+
+        textsurface = AssetManager().getFont("vera").render(str(game.spaceship.ressources), False, (0, 0, 0))
+        self.window.blit(textsurface, (0, 0))
 
         pygame.display.flip()
