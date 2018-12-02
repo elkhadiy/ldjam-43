@@ -103,6 +103,7 @@ class Game:
 
     def tick(self):
         self.spaceship.tick()
+        print(self.spaceship.ressources)
 
     def __repr__(self):
         return "Spaceship: {}\n".format(self.spaceship)
