@@ -1,13 +1,15 @@
 ---
   images:
     heads:
-      - 1
+      - "1"
     hairs:
       - F_1
       - F_2
       - M_1
       - M_2
       - M_3
+    faces:
+      - "1"
     bodies:
       - SKINNY
       - BIG

@@ -29,14 +29,14 @@ class CrewMember():
 
         self.bodyparts["skill"] = "skills_" + random.choice(crew_appearance["skills"][dominant_skill])
 
-        self.bodyparts["body"] = "Skinny"
-        self.bodycolor = crew_appearance["colors"]["skills"][dominant_skill]
-
-        self.bodyparts["head"] = "heads_1"
+        self.bodyparts["head"] = "heads_" +  random.choice(crew_appearance["images"]["heads"])
         self.skincolor = random.choice(crew_appearance["colors"]["skin"])
 
         self.bodyparts["hair"] = "hairs_" +  random.choice(crew_appearance["images"]["hairs"])
         self.haircolor = random.choice(crew_appearance["colors"]["hair"])
+
+        self.bodyparts["face"] = "faces_" +  random.choice(crew_appearance["images"]["faces"])
+        self.eyecolor = random.choice(crew_appearance["colors"]["eye"])
 
         self.bodyparts["body"] = "bodies_" + self.stats["shape"]
         self.skillcolor = crew_appearance["colors"]["skills"][dominant_skill]
@@ -63,6 +63,7 @@ class CrewMember():
 
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.pos)
+        ctx.blit(AssetManager().getColoredImage(self.bodyparts["face"], self.eyecolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["hair"], self.haircolor), self.pos)
         ctx.blit(AssetManager().getImage(self.bodyparts["skill"]), self.pos)
 
