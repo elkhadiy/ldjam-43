@@ -56,6 +56,11 @@ class CrewMember():
 
     def draw(self, ctx):
 
+        x, y = self.pos
+        x = (x//100)*100 + max(min(x % 100, 70), 10)
+        y = (y//100)*100 + max(min(y % 100, 60), 10)
+        self.pos = (x, y)
+
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["hair"], self.haircolor), self.pos)
