@@ -1,5 +1,8 @@
 import pygame
+import pygame.freetype
+
 import ulis43
+
 
 class AssetManager(object):
     class __AssetManager:
@@ -19,7 +22,7 @@ class AssetManager(object):
             # Reserve one channel for music
             pygame.mixer.set_reserved(1)
 
-            pygame.font.init()
+            pygame.freetype.init()
 
         def loadImage(self, name, path):
             self.images[name] = pygame.image.load( str(ulis43.basedir / "res" / "images" / path) ).convert_alpha()
@@ -31,14 +34,14 @@ class AssetManager(object):
             self.musics[name] = pygame.mixer.music( str(ulis43.basedir / "res" / "musics" / path) )
 
         def loadFont(self, name, path, size):
-            self.fonts[name] = pygame.font.Font(str(ulis43.basedir / "res" / "fonts" / path), size)
+            self.fonts[name] = pygame.freetype.Font(str(ulis43.basedir / "res" / "fonts" / path), size)
 
 
         def playMusic(self, name):
-            if (currentMusic != self.musics[name]):
-                currentMusic.fadeout(100)
+            if (self.currentMusic != self.musics[name]):
+                self.currentMusic.fadeout(100)
                 self.musics[name].play(-1)
-                currentMusic = self.musics[name]
+                self.currentMusic = self.musics[name]
 
         def playSound(self, name):
             self.sounds[name].play()

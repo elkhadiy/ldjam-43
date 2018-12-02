@@ -31,6 +31,33 @@ class Game:
         for room in ship_config["rooms"]:
             rooms.append(ulis43.rooms.Room(**room))
 
+        # setup random room positions
+        # simple random walk from last node (snake layout)
+        # (could be better by keeping track of all possible placements)
+
+        positions = [(random.randint(0, 5), random.randint(0, 5))]
+
+        for _ in range(len(rooms) - 1):
+            adjacents = [
+                [
+                    (p[0] + 1, p[1]), (p[0], p[1] + 1),
+                    (p[0] - 1, p[1]), (p[0], p[1] - 1)
+                ]
+                for p in positions
+                ]
+            adjacents = [item for sublist in adjacents for item in sublist]
+            adjacents = [
+                p for p in adjacents
+                if p[0] >= 0 and p[0] <= 5 and p[1] >= 0 and p[1] <= 5
+                ]
+            adjacents = list(set(adjacents))
+            adjacents = [p for p in adjacents if p not in positions]
+            positions.append(random.sample(adjacents, 1)[0])
+            random.shuffle(positions)
+
+        for i, room in enumerate(rooms):
+            room.x, room.y = positions[i]
+
         # Crew
 
         randnames_file = res_folder / "crew_names.yaml"
@@ -93,6 +120,9 @@ class Game:
                 consumption=consumption
             ))
 
+            randroom = random.sample(rooms, 1)[0]
+            randroom.add_crew_member(crew[-1])
+
         # Instanciate spaceship
 
         self.spaceship = ulis43.spaceship.Spaceship(
@@ -103,7 +133,9 @@ class Game:
 
     def tick(self):
         self.spaceship.tick()
-        print(self.spaceship.ressources)
+
+    def draw(self, ctx):
+        self.spaceship.draw(ctx)
 
     def __repr__(self):
         return "Spaceship: {}\n".format(self.spaceship)
