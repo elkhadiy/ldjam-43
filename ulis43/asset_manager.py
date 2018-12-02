@@ -5,6 +5,7 @@ class AssetManager(object):
     class __AssetManager:
         def __init__(self):
             self.images = {}
+
             self.sounds = {}
             self.musics = {}
             self.fonts = {}
@@ -21,7 +22,7 @@ class AssetManager(object):
             pygame.font.init()
 
         def loadImage(self, name, path):
-            self.images[name] = pygame.image.load( str(ulis43.basedir / "res" / "images" / path) ).convert()
+            self.images[name] = pygame.image.load( str(ulis43.basedir / "res" / "images" / path) ).convert_alpha()
 
         def loadSound(self, name, path):
             self.sounds[name] = pygame.mixer.Sound( str(ulis43.basedir / "res" / "sounds" / path) )
@@ -46,12 +47,17 @@ class AssetManager(object):
             return self.images[name]
 
         def getColoredImage(self, name, color):
-            image = self.images[name]
+            image = self.images[name].copy()
             w, h = image.get_size()
             for x in range(w):
                 for y in range(h):
                     prev = image.get_at((x, y))
-                    image.set_at((x, y), prev * pygame.Color(color[0], color[1], color[2], 255))
+                    image.set_at((x, y), pygame.Color(
+                        (color[0] * prev[0]) // 255,
+                        (color[1] * prev[1]) // 255,
+                        (color[2] * prev[2]) // 255,
+                        prev[3]))
+
 
             return image
 

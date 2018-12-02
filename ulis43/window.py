@@ -22,6 +22,6 @@ class Window():
                  self.window.blit(water, (i*100,j*100)) if (i+j%2) else self.window.blit(farm, (i*100,j*100))
 
         body = AssetManager().getColoredImage("body_1", (255,0,0))
-
+        self.window.blit(body, (100,100))
 
         pygame.display.flip()
