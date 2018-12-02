@@ -6,6 +6,8 @@ class CrewMember():
         self.consumption = consumption
         self.state = state
         self.stats = stats
+        self.x = 0
+        self.y = 0
 
     def tick(self, global_ressources):
         if self.state != "NOMINAL":

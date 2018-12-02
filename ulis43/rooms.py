@@ -1,3 +1,5 @@
+import random
+
 class Room():
 
     def __init__(self, type, capacity, hp, efficiency, state="NOMINAL"):
@@ -14,9 +16,17 @@ class Room():
         }
         # not a set because too lazy to make hashable stuff
         self.staff = []
+        self.x = 0
+        self.y = 0
 
-    def add_crew_member(self, crew_member):
-        if len(self.staff) < self.capacity:
+    def add_crew_member(self, crew_member, x=None, y=None):
+        if len(self.staff) < self.capacity or self.type == "HQ":
+            if x and y:
+                crew_member.x = x
+                crew_member.y = y
+            else:
+                crew_member.x = random.randint(self.x, self.x + 100)
+                crew_member.y = random.randint(self.y, self.y + 100)
             self.staff.append(crew_member)
 
         return len(self.staff) < self.capacity
@@ -60,8 +70,8 @@ class Room():
                 global_ressources["ELECTRICITY"] = max(0, global_ressources["ELECTRICITY"] - 1)
                 global_ressources["WATER"] += (
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x["Skills"]["CHEMISTRY"], self.staff)) +
-                        sum(map(lambda x: x["Skills"]["ENGINEERING"], self.staff)) / 2
+                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff)) +
+                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) / 2
                         ) / 100.0
                     )
         elif self.state == "ON_FIRE":
@@ -80,8 +90,8 @@ class Room():
                 global_ressources["ELECTRICITY"] = max(0, global_ressources["ELECTRICITY"] - 1)
                 global_ressources["OXYGEN"] += (
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x["Skills"]["CHEMISTRY"], self.staff)) +
-                        sum(map(lambda x: x["Skills"]["ENGINEERING"], self.staff)) / 2
+                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff)) +
+                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) / 2
                         ) / 100.0
                     )
         elif self.state == "ON_FIRE":
@@ -101,13 +111,13 @@ class Room():
                 global_ressources["WATER"] = max(0, global_ressources["WATER"] - 1)
                 global_ressources["FOOD"] += (
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x["Skills"]["FARMING"], self.staff)) +
-                        sum(map(lambda x: x["Skills"]["CHEMISTRY"], self.staff)) / 4
+                        sum(map(lambda x: x.skills["FARMING"], self.staff)) +
+                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff)) / 4
                         ) / 100.0
                     )
                 global_ressources["OXYGEN"] += (
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x["Skills"]["CHEMISTRY"], self.staff)) / 2
+                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff)) / 2
                         ) / 100.0
                     )
         elif self.state == "ON_FIRE":
@@ -126,8 +136,8 @@ class Room():
                 global_ressources["WATER"] = max(0, global_ressources["WATER"] - 1)
                 global_ressources["ELECTRICITY"] += (
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x["Skills"]["ENGINEERING"], self.staff)) * 2 +
-                        sum(map(lambda x: x["Skills"]["CHEMISTRY"], self.staff))
+                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) * 2 +
+                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff))
                         ) / 100.0
                     )
         elif self.state == "ON_FIRE":

@@ -9,7 +9,10 @@ def run():
     random.seed(datetime.datetime.now())
 
     g = Game()
-    print(g)
+    for room in g.spaceship.rooms:
+        print(room.type, ":")
+        for p in room.staff:
+            print("\t", p.name, ":", p.skills)
 
     print("-======== GAME LOOP ========-")
     while True:
