@@ -45,20 +45,18 @@ class AssetManager(object):
         def getImage(self, name):
             return self.images[name]
 
-<<<<<<< HEAD
         def getColoredImage(self, name, color):
             image = self.images[name]
-            w, h = surface.get_size()
+            w, h = image.get_size()
             for x in range(w):
                 for y in range(h):
                     prev = image.get_at((x, y))
-                    image.set_at((x, y), prev * pygame.Color(color))
+                    image.set_at((x, y), prev * pygame.Color(color[0], color[1], color[2], 255))
 
             return image
-=======
+
         def getFont(self, name):
             return self.fonts[name]
->>>>>>> master
 
     instance = None
 
