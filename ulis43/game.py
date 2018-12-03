@@ -85,7 +85,7 @@ class Game:
             rooms=rooms
         )
 
-    def tick(self, event, pos):
+    def tick(self, event=None, pos=None):
         if min(self.spaceship.ressources.values()) > 100:
             randroom = random.sample(self.spaceship.rooms, 1)[0]
             new_crew = createCrew()
