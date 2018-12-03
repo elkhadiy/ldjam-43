@@ -14,8 +14,8 @@ class Window():
         self.window = pygame.display.set_mode((800, 600))
 
         AssetManager().loadFont("hud", "Rockprp/rockprp.ttf", 18)
-        AssetManager().loadFont("title", "Rockprp/rockprp.ttf", 200)
-        AssetManager().loadFont("subtitle", "Rockprp/rockprp.ttf", 75)
+        AssetManager().loadFont("title", "Rockprp/rockprp.ttf", 150)
+        AssetManager().loadFont("subtitle", "Rockprp/rockprp.ttf", 50)
 
         rooms_folder = ulis43.basedir / "res" / "images" / "rooms"
         for room in rooms_folder.iterdir():

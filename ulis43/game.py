@@ -114,38 +114,47 @@ class Game:
             pos = pygame.mouse.get_pos()
             self.grab_crew(pos)
         self.spaceship.draw(ctx)
-        if self.last_grabbed:
+
+        pos = pygame.mouse.get_pos()
+        crew_member = [
+            member
+            for member in self.spaceship.crew
+            if member.pos[0] <= pos[0] + 8 and pos[0] <= member.pos[0] + 24
+            and member.pos[1] <= pos[1] + 8 and pos[1] <= member.pos[1] + 24
+        ]
+        if crew_member:
+            crew_member = crew_member[0]
             name_surf, name_rect = AssetManager().getFont("hud").render(
-                "NAME: {}".format(self.last_grabbed.name),
+                crew_member.name,
                 fgcolor=(251, 242, 54)
             )
             hp_surf, hp_rect = AssetManager().getFont("hud").render(
-                "HP: {}".format(self.last_grabbed.stats["hp"]),
+                "HP: {}".format(crew_member.stats["hp"]),
                 fgcolor=(255, 0, 0)
             )
             elec_surf, elec_rect = AssetManager().getFont("hud").render(
-                "ENG: {0:.2f}".format(self.last_grabbed.skills["ENGINEERING"]),
+                "ENG: {0:.2f}".format(crew_member.skills["ENGINEERING"]),
                 fgcolor=(251, 242, 54)
             )
             water_surf, water_rect = AssetManager().getFont("hud").render(
-                "CHEM: {0:.2f}".format(self.last_grabbed.skills["COOKING"]),
+                "CHEM: {0:.2f}".format(crew_member.skills["COOKING"]),
                 fgcolor=(99, 155, 255)
             )
             oxy_surf, oxy_rect = AssetManager().getFont("hud").render(
-                "COOK: {0:.2f}".format(self.last_grabbed.skills["FARMING"]),
+                "COOK: {0:.2f}".format(crew_member.skills["FARMING"]),
                 fgcolor=(138, 111, 48)
             )
             food_surf, food_rect = AssetManager().getFont("hud").render(
-                "FARM: {0:.2f}".format(self.last_grabbed.skills["CHEMISTRY"]),
+                "FARM: {0:.2f}".format(crew_member.skills["CHEMISTRY"]),
                 fgcolor=(138, 111, 48)
             )
 
-            ctx.blit(name_surf, name_rect.move(620, 220))
-            ctx.blit(hp_surf, hp_rect.move(620, 240))
-            ctx.blit(elec_surf, elec_rect.move(620, 260))
-            ctx.blit(water_surf, water_rect.move(620, 280))
-            ctx.blit(oxy_surf, water_rect.move(620, 300))
-            ctx.blit(food_surf, food_rect.move(620, 320))
+            ctx.blit(name_surf, name_rect.move(600, 220))
+            ctx.blit(hp_surf, hp_rect.move(600, 240))
+            ctx.blit(elec_surf, elec_rect.move(600, 260))
+            ctx.blit(water_surf, water_rect.move(600, 280))
+            ctx.blit(oxy_surf, water_rect.move(600, 300))
+            ctx.blit(food_surf, food_rect.move(600, 320))
 
 
     def grab_crew(self, pos):
