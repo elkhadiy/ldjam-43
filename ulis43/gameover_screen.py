@@ -1,27 +1,27 @@
 from ulis43.asset_manager import AssetManager
 
 
-class TitleScreen():
+class GameOverScreen():
 
     def __init__(self):
         self.start = False
 
     def draw(self, ctx):
         title_surf, title_rect = AssetManager().getFont("title").render(
-            "ULIS-43", fgcolor=(255, 255, 255)
+            "GAMEOVER", fgcolor=(255, 255, 255), size=150
         )
         center_x = title_rect.left + title_rect.width / 2
         center_y = title_rect.top + title_rect.height / 2
         delta_x = center_x - 400
         delta_y = center_y - 300
         ctx.blit(title_surf, title_rect.move(
-            title_rect.left - delta_x, title_rect.top + delta_y
+            title_rect.left - delta_x, title_rect.top + delta_y / 2
         ))
 
         white = (255, 255, 255)
         yellow = (255, 255, 0)
         start_surf, start_rect = AssetManager().getFont("subtitle").render(
-            "START", fgcolor=yellow if self.start else white
+            "RESTART", fgcolor=yellow if self.start else white
         )
         center_x = start_rect.left + start_rect.width / 2
         center_y = start_rect.top + start_rect.height / 2
