@@ -25,7 +25,7 @@ def run():
     while not quit:
         for event in pygame.event.get():
             if event.type == QUIT:
-                print(seed)
+                print("SEED:", seed)
                 quit = True
 
         before = pygame.time.get_ticks()

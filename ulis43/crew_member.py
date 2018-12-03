@@ -59,17 +59,19 @@ class CrewMember():
                 else:
                     self.stats["hp"] -= 1
 
-        x, y = self.pos
-        x += random.randint(-1,1)
-        y += 1 - random.randint(0,2)
-
-        x = (x//100)*100 + max(min(x % 100, 70), 10)
-        y = (y//100)*100 + max(min(y % 100, 60), 10)
-        self.pos = (x, y)
-
         return global_ressources
 
     def draw(self, ctx):
+
+        if self.state != "OUT_OF_SERVICE":
+            x, y = self.pos
+            x += random.randint(-1,1)
+            y += 1 - random.randint(0,2)
+
+            x = (x//100)*100 + max(min(x % 100, 70), 10)
+            y = (y//100)*100 + max(min(y % 100, 60), 10)
+            self.pos = (x, y)
+
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["face"], self.eyecolor), self.pos)
