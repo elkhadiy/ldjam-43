@@ -42,9 +42,15 @@ class CrewMember():
         self.skillcolor = crew_appearance["colors"]["skills"][dominant_skill]
 
     def tick(self, global_ressources):
+        if self.state == "OUT_OF_SERVICE":
+            return global_ressources
+
         if self.state != "NOMINAL":
             self.stats["hp"] -= 1
         if self.stats["hp"] <= 0:
+            for stat in self.stats.keys():
+                self.stats[stat] = 0
+            self.skincolor = (75,45,175)
             self.state = "OUT_OF_SERVICE"
         if self.state != "OUT_OF_SERVICE":
             for ressource in ["OXYGEN", "WATER", "FOOD"]:
@@ -52,15 +58,18 @@ class CrewMember():
                     global_ressources[ressource] = max(0, global_ressources[ressource] - 1)
                 else:
                     self.stats["hp"] -= 1
-        return global_ressources
-
-    def draw(self, ctx):
 
         x, y = self.pos
+        x += random.randint(-1,1)
+        y += 1 - random.randint(0,2)
+
         x = (x//100)*100 + max(min(x % 100, 70), 10)
         y = (y//100)*100 + max(min(y % 100, 60), 10)
         self.pos = (x, y)
 
+        return global_ressources
+
+    def draw(self, ctx):
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["face"], self.eyecolor), self.pos)
