@@ -28,6 +28,7 @@ class Room():
             else:
                 crew_member.pos = (random.randint(self.pos[0] + 20, self.pos[0] + 80),
                                    random.randint(self.pos[1] + 20, self.pos[1] + 60))
+            crew_member.drawpos = crew_member.pos
             crew_member.current_room = self
             self.staff.append(crew_member)
 

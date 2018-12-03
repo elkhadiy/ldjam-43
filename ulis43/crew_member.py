@@ -69,8 +69,8 @@ class CrewMember():
         x, y = self.pos
         if not self.grabbed and self.current_room:
 
-            x += random.randint(-1,1)
-            y += 1 - random.randint(0,2)
+            x += random.randint(-5,5)
+            y += random.randint(-5,5)
 
             x = self.current_room.pos[0] + max(min((x - self.current_room.pos[0]) % 100, 99-(32+5)), 5)
             y = self.current_room.pos[1] + max(min((y - self.current_room.pos[1]) % 100, 99-(32+5)), 5)
@@ -84,15 +84,19 @@ class CrewMember():
         return global_ressources
 
     def draw(self, ctx):
+        x, y = self.pos
+        drx, dry = self.drawpos
+
+        self.drawpos = ( drx + (-1 if drx - x > 0 else 1), dry + (-1 if dry - y > 0 else 1))
 
         if self.grabbed and self.current_room:
-            self.pos = pygame.mouse.get_pos()
+            self.drawpos = pygame.mouse.get_pos()
 
-        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.rotation), self.pos)
-        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.rotation), self.pos)
-        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["face"], self.eyecolor), self.rotation), self.pos)
-        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["hair"], self.haircolor), self.rotation), self.pos)
-        ctx.blit(pygame.transform.rotate(AssetManager().getImage(self.bodyparts["skill"]), self.rotation), self.pos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.rotation), self.drawpos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.rotation), self.drawpos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["face"], self.eyecolor), self.rotation), self.drawpos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["hair"], self.haircolor), self.rotation), self.drawpos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getImage(self.bodyparts["skill"]), self.rotation), self.drawpos)
 
     def __repr__(self):
         return """Name: {}
