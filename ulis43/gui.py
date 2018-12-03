@@ -6,6 +6,7 @@ from pygame.locals import *
 
 from ulis43.game import Game
 from ulis43.title_screen import TitleScreen
+from ulis43.gameover_screen import GameOverScreen
 from ulis43.window import Window
 
 
@@ -19,42 +20,70 @@ def run():
         seed = args.seed
     random.seed(seed)
     title_screen = TitleScreen()
-    g = Game()
+    gameover_screen = GameOverScreen()
     window = Window()
 
     delta = 0
     quit = False
     start = False
+    gameover = False
+    restart = True
     event = None
     pos = None
+    g = Game()
 
-    while not (start or quit):
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                quit = True
-            elif event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                title_screen.click_event(pos, "down")
-            elif event.type == MOUSEBUTTONUP:
-                pos = pygame.mouse.get_pos()
-                start = title_screen.click_event(pos, "up")
-        window.draw(title_screen)
+    while restart and not quit:
 
-    while not quit:
-        for event_ in pygame.event.get():
-            if event_.type == QUIT:
-                print("SEED:", seed)
-                quit = True
+        while not (start or quit):
+            for event_ in pygame.event.get():
+                if event_.type == QUIT:
+                    quit = True
+                elif event_.type == MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    title_screen.click_event(pos, "down")
+                elif event_.type == MOUSEBUTTONUP:
+                    pos = pygame.mouse.get_pos()
+                    start = title_screen.click_event(pos, "up")
+            window.draw(title_screen)
 
+        while not (quit or gameover):
+            for event_ in pygame.event.get():
+                if event_.type == QUIT:
+                    print("SEED:", seed)
+                    quit = True
 
-        before = pygame.time.get_ticks()
-        while delta > 1000:
-            g.tick()
-            delta -= 1000
-        window.draw(g)
-        exectime = pygame.time.get_ticks() - before
-        pygame.time.delay(17 - exectime)
-        delta += max(exectime, 17)
+            before = pygame.time.get_ticks()
+            while delta > 100:
+                gameover = g.tick()
+                delta -= 100
+            window.draw(g)
+            exectime = pygame.time.get_ticks() - before
+            pygame.time.delay(17 - exectime)
+            delta += max(exectime, 17)
+
+        restart = False
+
+        while not quit and not restart:
+            for event_ in pygame.event.get():
+                if event_.type == QUIT:
+                    print("SEED:", seed)
+                    quit = True
+                elif event_.type == MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    gameover_screen.click_event(pos, "down")
+                elif event_.type == MOUSEBUTTONUP:
+                    pos = pygame.mouse.get_pos()
+                    restart = gameover_screen.click_event(pos, "up")
+            window.draw(gameover_screen)
+
+        delta = 0
+        start = False
+        gameover = False
+        restart = True
+        pos = None
+        g = Game()
+        title_screen.start = False
+        gameover_screen.start = False
 
 
 if __name__ == '__main__':

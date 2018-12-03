@@ -99,6 +99,10 @@ class Game:
 
         self.spaceship.tick()
 
+        alive = [staff for staff in self.spaceship.crew if staff.stats["hp"]]
+
+        return not bool(alive)
+
     def draw(self, ctx):
         if pygame.mouse.get_pressed()[0] and not [member for member in self.spaceship.crew if member.grabbed]:
             pos = pygame.mouse.get_pos()
