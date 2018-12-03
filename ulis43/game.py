@@ -64,11 +64,6 @@ class Game:
         delta_x = center_x - 300
         delta_y = center_y - 300
 
-        print(min_x, max_x)
-        print(min_y, max_y)
-        print(center_x, center_y)
-        print(delta_x, delta_y)
-
         positions = [(p[0] * 100 - delta_x, p[1] * 100 - delta_y) for p in positions]
 
         for i, room in enumerate(rooms):

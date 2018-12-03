@@ -1,3 +1,4 @@
+import argparse
 import random
 import datetime
 import pygame.time
@@ -8,26 +9,28 @@ from ulis43.window import Window
 
 
 def run():
-    random.seed(datetime.datetime.now())
+    parser = argparse.ArgumentParser(prog='ulis43')
+    parser.add_argument('-s', '--seed', help='ship seed')
+    args = parser.parse_args()
+    if not args.seed:
+        seed = str(datetime.datetime.now())
+    else:
+        seed = args.seed
+    random.seed(seed)
     g = Game()
     window = Window()
-
-    for room in g.spaceship.rooms:
-        print(room.type, ":")
-        for p in room.staff:
-            print("\t", p.name, ":", p.skills)
 
     delta = 0
     quit = False
     while not quit:
         for event in pygame.event.get():
             if event.type == QUIT:
+                print(seed)
                 quit = True
 
         before = pygame.time.get_ticks()
         while delta > 200:
             g.tick()
-            print(g.spaceship.ressources)
             delta -= 200
         window.draw(g)
         exectime = pygame.time.get_ticks() - before

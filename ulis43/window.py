@@ -13,6 +13,9 @@ class Window():
         pygame.init()
         self.window = pygame.display.set_mode((800, 600))
 
+        AssetManager().loadFont("hud", "Lunchds/lunchds.ttf", 18)
+        AssetManager().loadFont("title", "Andromeda/AndromedaTV.TTF", 32)
+
         rooms_folder = ulis43.basedir / "res" / "images" / "rooms"
         for room in rooms_folder.iterdir():
             AssetManager().loadImage(room.stem, "rooms/" + room.name)
@@ -29,6 +32,8 @@ class Window():
                 AssetManager().loadImage(name, path)
 
     def draw(self, game):
+
+        self.window.fill((0, 0, 0))
 
         game.spaceship.draw(self.window)
 
