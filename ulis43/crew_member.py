@@ -1,5 +1,6 @@
 import yaml
 import random
+import pygame
 
 import ulis43
 from ulis43.asset_manager import AssetManager
@@ -14,6 +15,8 @@ class CrewMember():
         self.stats = stats
 
         self.pos = (0, 0)
+        self.grabbed = False
+        self.current_room = None
 
         self.bodyparts = {}
 
@@ -63,7 +66,7 @@ class CrewMember():
 
     def draw(self, ctx):
 
-        if self.state != "OUT_OF_SERVICE":
+        if self.state != "OUT_OF_SERVICE" and not self.grabbed:
             x, y = self.pos
             x += random.randint(-1,1)
             y += 1 - random.randint(0,2)
@@ -71,6 +74,8 @@ class CrewMember():
             x = (x//100)*100 + max(min(x % 100, 70), 10)
             y = (y//100)*100 + max(min(y % 100, 60), 10)
             self.pos = (x, y)
+        elif self.grabbed:
+            self.pos = pygame.mouse.get_pos()
 
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.pos)
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.pos)

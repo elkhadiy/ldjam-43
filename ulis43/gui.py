@@ -22,15 +22,21 @@ def run():
 
     delta = 0
     quit = False
+    event = None
+    pos = None
     while not quit:
         for event in pygame.event.get():
             if event.type == QUIT:
                 print("SEED:", seed)
                 quit = True
+            # MOUSEBUTTONUP on it's own seems unreliable
+            elif event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+                event = "CLICK"
 
         before = pygame.time.get_ticks()
         while delta > 200:
-            g.tick()
+            g.tick(event, pos)
             delta -= 200
         window.draw(g)
         exectime = pygame.time.get_ticks() - before

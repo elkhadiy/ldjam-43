@@ -28,12 +28,13 @@ class Room():
             else:
                 crew_member.pos = (random.randint(self.pos[0] + 20, self.pos[0] + 80),
                                    random.randint(self.pos[1] + 20, self.pos[1] + 60))
+            crew_member.current_room = self
             self.staff.append(crew_member)
 
         return len(self.staff) < self.capacity
 
     def remove_crew_member(self, crew_member):
-        if len(self.staff):
+        if len(self.staff) and crew_member in self.staff:
             self.staff.remove(crew_member)
 
     def set_neighbour(self, room, pos):
