@@ -8,6 +8,7 @@ class AssetManager(object):
     class __AssetManager:
         def __init__(self):
             self.images = {}
+            self.coloredImages = {}
 
             self.sounds = {}
             self.musics = {}
@@ -50,18 +51,20 @@ class AssetManager(object):
             return self.images[name]
 
         def getColoredImage(self, name, color):
-            image = self.images[name].copy()
-            w, h = image.get_size()
-            for x in range(w):
-                for y in range(h):
-                    prev = image.get_at((x, y))
-                    image.set_at((x, y), pygame.Color(
-                        (color[0] * prev[0]) // 255,
-                        (color[1] * prev[1]) // 255,
-                        (color[2] * prev[2]) // 255,
-                        prev[3]))
-
-
+            if (name + str(color) in self.coloredImages.keys()) :
+                image = self.coloredImages[name + str(color)]
+            else :
+                image = self.images[name].copy()
+                w, h = image.get_size()
+                for x in range(w):
+                    for y in range(h):
+                        prev = image.get_at((x, y))
+                        image.set_at((x, y), pygame.Color(
+                            (color[0] * prev[0]) // 255,
+                            (color[1] * prev[1]) // 255,
+                            (color[2] * prev[2]) // 255,
+                            prev[3]))
+                self.coloredImages[name + str(color)] = image
             return image
 
         def getFont(self, name):
