@@ -62,19 +62,21 @@ class CrewMember():
                 else:
                     self.stats["hp"] -= 1
 
-        return global_ressources
-
-    def draw(self, ctx):
-
-        if self.state != "OUT_OF_SERVICE" and not self.grabbed:
+        if not self.grabbed:
             x, y = self.pos
             x += random.randint(-1,1)
             y += 1 - random.randint(0,2)
 
-            x = (x//100)*100 + max(min(x % 100, 70), 10)
-            y = (y//100)*100 + max(min(y % 100, 60), 10)
+            x = self.current_room.pos[0] + max(min((x - self.current_room.pos[0]) % 100, 99-(32+5)), 5)
+            y = self.current_room.pos[1] + max(min((y - self.current_room.pos[1]) % 100, 99-(32+5)), 5)
+
             self.pos = (x, y)
-        elif self.grabbed:
+
+        return global_ressources
+
+    def draw(self, ctx):
+
+        if self.grabbed:
             self.pos = pygame.mouse.get_pos()
 
         ctx.blit(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.pos)

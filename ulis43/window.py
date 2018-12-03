@@ -35,6 +35,6 @@ class Window():
 
         self.window.fill((0, 0, 0))
 
-        game.spaceship.draw(self.window)
+        game.draw(self.window)
 
         pygame.display.flip()

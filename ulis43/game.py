@@ -1,5 +1,9 @@
 import yaml
 import random
+
+import pygame
+from pygame.locals import *
+
 import ulis43
 import ulis43.rooms
 import ulis43.spaceship
@@ -85,46 +89,53 @@ class Game:
             rooms=rooms
         )
 
-    def tick(self, event=None, pos=None):
+    def tick(self):
         if min(self.spaceship.ressources.values()) > 100:
             randroom = random.sample(self.spaceship.rooms, 1)[0]
             new_crew = createCrew()
             randroom.add_crew_member(new_crew)
+            new_crew.current_room = randroom
             self.spaceship.crew.append(new_crew)
-
-        if event == "CLICK":
-            grabbed_crew_member = [
-                member for member in self.spaceship.crew if member.grabbed
-            ]
-            if grabbed_crew_member:
-                grabbed_crew_member[0].grabbed = False
-                hovered_room = [
-                    room
-                    for room in self.spaceship.rooms
-                    if room.pos[0] <= pos[0] and pos[0] <= room.pos[0] + 100
-                    and room.pos[1] <= pos[1] and pos[1] <= room.pos[1] + 100
-                ]
-                if hovered_room:
-                    hovered_room[0].add_crew_member(grabbed_crew_member[0])
-                else:
-                    hq_room = [room for room in self.spaceship.rooms if room.type == "HQ"][0]
-                    hq_room.add_crew_member(grabbed_crew_member[0])
-            else:
-                crew_member = [
-                    member
-                    for member in self.spaceship.crew
-                    if member.pos[0] <= pos[0] and pos[0] <= member.pos[0] + 32
-                    and member.pos[1] <= pos[1] and pos[1] <= member.pos[1] + 40
-                ]
-                if crew_member:
-                    crew_member[0].grabbed = True
-                    crew_member[0].current_room.remove_crew_member(crew_member[0])
-            event = None
 
         self.spaceship.tick()
 
     def draw(self, ctx):
+        if pygame.mouse.get_pressed()[0] and not [member for member in self.spaceship.crew if member.grabbed]:
+            pos = pygame.mouse.get_pos()
+            self.grab_crew(pos)
+        if not pygame.mouse.get_pressed()[0] and [member for member in self.spaceship.crew if member.grabbed]:
+            pos = pygame.mouse.get_pos()
+            self.grab_crew(pos)
         self.spaceship.draw(ctx)
+
+
+    def grab_crew(self, pos):
+        grabbed_crew_member = [
+            member for member in self.spaceship.crew if member.grabbed
+        ]
+        if grabbed_crew_member:
+            grabbed_crew_member[0].grabbed = False
+            hovered_room = [
+                room
+                for room in self.spaceship.rooms
+                if room.pos[0] <= pos[0] and pos[0] <= room.pos[0] + 100
+                and room.pos[1] <= pos[1] and pos[1] <= room.pos[1] + 100
+            ]
+            if hovered_room:
+                hovered_room[0].add_crew_member(grabbed_crew_member[0])
+            else:
+                hq_room = [room for room in self.spaceship.rooms if room.type == "HQ"][0]
+                hq_room.add_crew_member(grabbed_crew_member[0])
+        else:
+            crew_member = [
+                member
+                for member in self.spaceship.crew
+                if member.pos[0] <= pos[0] and pos[0] <= member.pos[0] + 32
+                and member.pos[1] <= pos[1] and pos[1] <= member.pos[1] + 40
+            ]
+            if crew_member:
+                crew_member[0].grabbed = True
+                crew_member[0].current_room.remove_crew_member(crew_member[0])
 
     def __repr__(self):
         return "Spaceship: {}\n".format(self.spaceship)
