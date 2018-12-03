@@ -22,6 +22,7 @@
     - ELECTRICAL_PLANT
     - MACHINE_ROOM
     - HQ
+    - TRAPDOOR
   SHAPE:
     - BIG
     - MUSCULAR

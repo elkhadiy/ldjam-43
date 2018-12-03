@@ -39,6 +39,12 @@
           efficiency: 100
           state: "NOMINAL"
 
+        - type: TRAPDOOR
+          capacity: 1
+          hp: 1000
+          efficiency: 100
+          state: "NOMINAL"
+
       ressources:
         OXYGEN: 100
         WATER: 100

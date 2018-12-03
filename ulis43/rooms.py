@@ -49,7 +49,9 @@ class Room():
 
         # Resolve ressource creation and consumption
 
-        if self.type == "WATER_PLANT":
+        if self.type == "TRAPDOOR":
+            global_ressources = self.__trapdoor_tick(global_ressources)
+        elif self.type == "WATER_PLANT":
             global_ressources = self.__water_plant_tick(global_ressources)
         elif self.type == "OXYGEN_PLANT":
             global_ressources = self.__oxygen_plant_tick(global_ressources)
@@ -63,6 +65,15 @@ class Room():
             global_ressources = self.__hq_tick(global_ressources)
 
         global_ressources = self.__neighbour_effect_tick(global_ressources)
+
+        return global_ressources
+
+    def __trapdoor_tick(self, global_ressources):
+        self.state = "NOMINAL"
+
+        for crew in self.staff:
+            crew.current_room = None
+        self.staff = []
 
         return global_ressources
 

@@ -15,6 +15,10 @@ class CrewMember():
         self.stats = stats
 
         self.pos = (0, 0)
+        self.drawpos = (0, 0)
+        self.rotation = 0
+        self.drawrotation = 0
+
         self.grabbed = False
         self.current_room = None
 
@@ -62,8 +66,9 @@ class CrewMember():
                 else:
                     self.stats["hp"] -= 1
 
-        if not self.grabbed:
-            x, y = self.pos
+        x, y = self.pos
+        if not self.grabbed and self.current_room:
+
             x += random.randint(-1,1)
             y += 1 - random.randint(0,2)
 
@@ -72,18 +77,22 @@ class CrewMember():
 
             self.pos = (x, y)
 
+        if not self.current_room:
+            self.pos = (x + 10, y)
+            self.rotation += 5
+
         return global_ressources
 
     def draw(self, ctx):
 
-        if self.grabbed:
+        if self.grabbed and self.current_room:
             self.pos = pygame.mouse.get_pos()
 
-        ctx.blit(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.pos)
-        ctx.blit(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.pos)
-        ctx.blit(AssetManager().getColoredImage(self.bodyparts["face"], self.eyecolor), self.pos)
-        ctx.blit(AssetManager().getColoredImage(self.bodyparts["hair"], self.haircolor), self.pos)
-        ctx.blit(AssetManager().getImage(self.bodyparts["skill"]), self.pos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.rotation), self.pos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.rotation), self.pos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["face"], self.eyecolor), self.rotation), self.pos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["hair"], self.haircolor), self.rotation), self.pos)
+        ctx.blit(pygame.transform.rotate(AssetManager().getImage(self.bodyparts["skill"]), self.rotation), self.pos)
 
     def __repr__(self):
         return """Name: {}

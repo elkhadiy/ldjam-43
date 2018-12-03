@@ -113,7 +113,8 @@ class Game:
         grabbed_crew_member = [
             member for member in self.spaceship.crew if member.grabbed
         ]
-        if grabbed_crew_member:
+
+        if grabbed_crew_member :
             grabbed_crew_member[0].grabbed = False
             hovered_room = [
                 room
@@ -133,6 +134,10 @@ class Game:
                 if member.pos[0] <= pos[0] and pos[0] <= member.pos[0] + 32
                 and member.pos[1] <= pos[1] and pos[1] <= member.pos[1] + 40
             ]
+
+            if crew_member and not crew_member[0].current_room:
+                return
+
             if crew_member:
                 crew_member[0].grabbed = True
                 crew_member[0].current_room.remove_crew_member(crew_member[0])
