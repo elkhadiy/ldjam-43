@@ -69,11 +69,12 @@ class Room():
         if self.state == "NOMINAL":
             if global_ressources["ELECTRICITY"]:
                 global_ressources["ELECTRICITY"] = max(0, global_ressources["ELECTRICITY"] - 1)
-                global_ressources["WATER"] += (
+                global_ressources["WATER"] += min(
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff)) +
-                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) / 2
-                        ) / 100.0
+                        sum(map(lambda x: x.skills["CHEMISTRY"],   self.staff)) * 4 +
+                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) * 2
+                        ) / 100.0,
+                        20
                     )
         elif self.state == "ON_FIRE":
             pass
@@ -87,13 +88,15 @@ class Room():
 
     def __oxygen_plant_tick(self, global_ressources):
         if self.state == "NOMINAL":
-            if global_ressources["ELECTRICITY"]:
+            if global_ressources["ELECTRICITY"] and global_ressources["WATER"]:
                 global_ressources["ELECTRICITY"] = max(0, global_ressources["ELECTRICITY"] - 1)
-                global_ressources["OXYGEN"] += (
+                global_ressources["WATER"]       = max(0, global_ressources["WATER"]       - 1)
+                global_ressources["OXYGEN"] += min(
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff)) +
-                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) / 2
-                        ) / 100.0
+                        sum(map(lambda x: x.skills["CHEMISTRY"]  , self.staff)) * 4 +
+                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) * 2
+                        ),
+                        20
                     )
         elif self.state == "ON_FIRE":
             pass
@@ -109,17 +112,20 @@ class Room():
         if self.state == "NOMINAL":
             if global_ressources["ELECTRICITY"] and global_ressources["WATER"]:
                 global_ressources["ELECTRICITY"] = max(0, global_ressources["ELECTRICITY"] - 1)
-                global_ressources["WATER"] = max(0, global_ressources["WATER"] - 1)
-                global_ressources["FOOD"] += (
+                global_ressources["WATER"]       = max(0, global_ressources["WATER"]       - 2)
+                global_ressources["FOOD"] += min(
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x.skills["FARMING"], self.staff)) +
-                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff)) / 4
-                        ) / 100.0
+                        sum(map(lambda x: x.skills["FARMING"],   self.staff)) * 4 +
+                        sum(map(lambda x: x.skills["COOKING"],   self.staff)) * 2 +
+                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff))
+                        ),
+                        20
                     )
-                global_ressources["OXYGEN"] += (
+                global_ressources["OXYGEN"] += min(
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff)) / 2
-                        ) / 100.0
+                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff))
+                        ),
+                        20
                     )
         elif self.state == "ON_FIRE":
             pass
@@ -135,11 +141,12 @@ class Room():
         if self.state == "NOMINAL":
             if global_ressources["WATER"]:
                 global_ressources["WATER"] = max(0, global_ressources["WATER"] - 1)
-                global_ressources["ELECTRICITY"] += (
+                global_ressources["ELECTRICITY"] += min(
                     self.efficiency / 100.0 * (
-                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) * 2 +
-                        sum(map(lambda x: x.skills["CHEMISTRY"], self.staff))
-                        ) / 100.0
+                        sum(map(lambda x: x.skills["ENGINEERING"], self.staff)) * 4 +
+                        sum(map(lambda x: x.skills["CHEMISTRY"],   self.staff)) * 2
+                        ),
+                        20
                     )
         elif self.state == "ON_FIRE":
             pass
@@ -153,7 +160,7 @@ class Room():
 
     def __machine_room_tick(self, global_ressources):
         if self.state == "NOMINAL":
-            global_ressources["OXYGEN"] = max(0, global_ressources["OXYGEN"] - 2)
+            global_ressources["OXYGEN"]      = max(0, global_ressources["OXYGEN"]      - 2)
             global_ressources["ELECTRICITY"] = max(0, global_ressources["ELECTRICITY"] - 1)
         elif self.state == "ON_FIRE":
             pass
@@ -170,9 +177,9 @@ class Room():
             for ressource in ["OXYGEN", "WATER", "FOOD"]:
                 if not global_ressources[ressource]:
                     self.hp = max(0, self.hp - 1)
-            global_ressources["OXYGEN"] = max(0, global_ressources["OXYGEN"] - 1)
-            global_ressources["WATER"] = max(0, global_ressources["WATER"] - 1)
-            global_ressources["FOOD"] = max(0, global_ressources["FOOD"] - 1)
+            global_ressources["OXYGEN"]      = max(0, global_ressources["OXYGEN"]      - 1)
+            global_ressources["WATER"]       = max(0, global_ressources["WATER"]       - 1)
+            global_ressources["FOOD"]        = max(0, global_ressources["FOOD"]        - 1)
             global_ressources["ELECTRICITY"] = max(0, global_ressources["ELECTRICITY"] - 1)
         elif self.state == "ON_FIRE":
             pass

@@ -25,10 +25,10 @@ def run():
                 quit = True
 
         before = pygame.time.get_ticks()
-        while delta > 1000:
+        while delta > 200:
             g.tick()
             print(g.spaceship.ressources)
-            delta -= 1000
+            delta -= 200
         window.draw(g)
         exectime = pygame.time.get_ticks() - before
         pygame.time.delay(17 - exectime)
