@@ -88,7 +88,7 @@ class Room():
                         sum(map(lambda x: x.skills["CHEMISTRY"],   living_staff)) * 4 +
                         sum(map(lambda x: x.skills["ENGINEERING"], living_staff)) * 2
                         )),
-                        20
+                        30
                     )
         elif self.state == "ON_FIRE":
             pass

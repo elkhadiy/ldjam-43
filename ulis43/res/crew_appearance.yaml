@@ -12,24 +12,20 @@
       - MUSCULAR
     skills:
       - Chemist_1
-      - Chef_1
-      - Chef_2
+      - Cooker_1
       - Engineer_1
-      - Engineer_2
-      - Farmer_1
+      - Gardener_1
 
 
   skills:
     CHEMISTRY:
       - Chemist_1
     COOKING:
-      - Chef_1
-      - Chef_2
+      - Cooker_1
     ENGINEERING:
       - Engineer_1
-      - Engineer_2
     FARMING:
-      - Farmer_1
+      - Gardener_1
 
 
   colors:
@@ -53,7 +49,7 @@
       - [225,225,225]
 
     skills:
-      CHEMISTRY: [225,225,225]
+      CHEMISTRY: [0,149,225]
       COOKING: [225,225,225]
       ENGINEERING: [255,149,0]
       FARMING: [148,125,81]

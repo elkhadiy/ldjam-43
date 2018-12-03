@@ -30,7 +30,7 @@ class Window():
             for file in crew_appearance["images"][folder]:
                 name = str(folder) + "_" + str(file)
                 path = "crews/" + str(folder) + "/" + str(file) + ".png"
-                AssetManager().loadImage(name, path)
+                AssetManager().loadImage(name, path, 1)
 
     def draw(self, game):
 

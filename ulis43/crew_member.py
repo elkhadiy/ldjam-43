@@ -69,8 +69,8 @@ class CrewMember():
         x, y = self.pos
         if not self.grabbed and self.current_room:
 
-            x += random.randint(-5,5)
-            y += random.randint(-5,5)
+            x += random.randint(-15,15)
+            y += random.randint(-15,15)
 
             x = self.current_room.pos[0] + max(min((x - self.current_room.pos[0]) % 100, 99-(32+5)), 5)
             y = self.current_room.pos[1] + max(min((y - self.current_room.pos[1]) % 100, 99-(32+5)), 5)
@@ -78,7 +78,7 @@ class CrewMember():
             self.pos = (x, y)
 
         if not self.current_room:
-            self.pos = (x + 10, y)
+            self.pos = (x + 15, y)
             self.rotation += 5
 
         return global_ressources
@@ -87,10 +87,12 @@ class CrewMember():
         x, y = self.pos
         drx, dry = self.drawpos
 
-        self.drawpos = ( drx + (-1 if drx - x > 0 else 1), dry + (-1 if dry - y > 0 else 1))
+        self.drawpos = ( drx + (-1 if drx - x > 0 else 1 if drx - x < 0 else 0),
+                         dry + (-1 if dry - y > 0 else 1 if dry - y < 0 else 0))
 
         if self.grabbed and self.current_room:
-            self.drawpos = pygame.mouse.get_pos()
+            x, y = pygame.mouse.get_pos()
+            self.drawpos = (x - 16, y - 16)
 
         ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["body"], self.skillcolor), self.rotation), self.drawpos)
         ctx.blit(pygame.transform.rotate(AssetManager().getColoredImage(self.bodyparts["head"], self.skincolor), self.rotation), self.drawpos)

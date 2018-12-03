@@ -92,6 +92,9 @@ class Game:
 
         self.last_grabbed = None
 
+        AssetManager().loadMusic("Mall", "Komiku_-_08_-_Mall.mp3")
+        AssetManager().playMusic("Mall")
+
     def tick(self):
         if min(self.spaceship.ressources.values()) > 100:
             randroom = random.sample(self.spaceship.rooms, 1)[0]
@@ -153,6 +156,9 @@ class Game:
             member for member in self.spaceship.crew if member.grabbed
         ]
         if grabbed_crew_member:
+            if not grabbed_crew_member[0].current_room:
+                self.last_grabbed = None
+                return
             self.last_grabbed = grabbed_crew_member[0]
             grabbed_crew_member[0].grabbed = False
             hovered_room = [
@@ -170,10 +176,13 @@ class Game:
             crew_member = [
                 member
                 for member in self.spaceship.crew
-                if member.pos[0] <= pos[0] and pos[0] <= member.pos[0] + 32
-                and member.pos[1] <= pos[1] and pos[1] <= member.pos[1] + 40
+                if member.pos[0] <= pos[0] + 8 and pos[0] <= member.pos[0] + 24
+                and member.pos[1] <= pos[1] + 8 and pos[1] <= member.pos[1] + 24
             ]
+
             if crew_member:
+                if not crew_member[0].current_room:
+                    return
                 crew_member[0].grabbed = True
                 crew_member[0].current_room.remove_crew_member(crew_member[0])
 

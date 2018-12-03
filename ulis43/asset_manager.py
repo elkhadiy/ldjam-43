@@ -1,5 +1,6 @@
 import pygame
 import pygame.freetype
+from pygame.mixer import *
 
 import ulis43
 
@@ -25,14 +26,22 @@ class AssetManager(object):
 
             pygame.freetype.init()
 
-        def loadImage(self, name, path):
-            self.images[name] = pygame.image.load( str(ulis43.basedir / "res" / "images" / path) ).convert_alpha()
+        def loadImage(self, name, path, scale=1):
+            img = pygame.image.load( str(ulis43.basedir / "res" / "images" / path) ).convert_alpha()
+
+            if scale == 1:
+                self.images[name] = img
+            elif scale == 2:
+                self.images[name] = pygame.transform.scale2x(img)
+            else:
+                width, height = img.get_size()
+                self.images[name] = pygame.transform.scale(img, (scale * width, scale * height))
 
         def loadSound(self, name, path):
             self.sounds[name] = pygame.mixer.Sound( str(ulis43.basedir / "res" / "sounds" / path) )
 
         def loadMusic(self, name, path):
-            self.musics[name] = pygame.mixer.music( str(ulis43.basedir / "res" / "musics" / path) )
+            self.musics[name] = pygame.mixer.music.load( str(ulis43.basedir / "res" / "musics" / path) )
 
         def loadFont(self, name, path, size):
             self.fonts[name] = pygame.freetype.Font(str(ulis43.basedir / "res" / "fonts" / path), size)
