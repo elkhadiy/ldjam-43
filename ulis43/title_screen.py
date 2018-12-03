@@ -21,14 +21,13 @@ class TitleScreen():
         white = (255, 255, 255)
         yellow = (255, 255, 0)
         start_surf, start_rect = AssetManager().getFont("subtitle").render(
-            "START", fgcolor=yellow if self.start else white  #,
-            # bgcolor=white if self.start else black
+            "START", fgcolor=yellow if self.start else white
         )
         center_x = start_rect.left + start_rect.width / 2
         center_y = start_rect.top + start_rect.height / 2
         delta_x = center_x - 400
         delta_y = center_y - 300
-        start_rect = title_rect.move(
+        start_rect.move_ip(
             start_rect.left - delta_x, start_rect.top - delta_y
         )
         ctx.blit(start_surf, start_rect)
@@ -37,10 +36,10 @@ class TitleScreen():
 
     def click_event(self, pos, event):
         self.start = (
-            self.start_button_rect.left <= pos[0]
-            and pos[0] <= self.start_button_rect.left + self.start_button_rect.width
-            and self.start_button_rect.top <= pos[1]
-            and pos[1] <= self.start_button_rect.top + self.start_button_rect.height)
+            (self.start_button_rect.left <= pos[0])
+            and (pos[0] <= self.start_button_rect.left + self.start_button_rect.width)
+            and (self.start_button_rect.top <= pos[1])
+            and (pos[1] <= self.start_button_rect.top + self.start_button_rect.height))
         if event == "up" and not self.start:
             self.start = False
         return self.start
