@@ -31,10 +31,10 @@ class Spaceship():
             "FOOD: {}".format(self.ressources["FOOD"]),
             fgcolor=(138, 111, 48)
         )
-        ctx.blit(elec_surf, elec_rect.move(620, 20))
-        ctx.blit(water_surf, water_rect.move(620, 40))
-        ctx.blit(oxy_surf, water_rect.move(620, 60))
-        ctx.blit(food_surf, food_rect.move(620, 80))
+        ctx.blit(elec_surf, elec_rect.move(600, 20))
+        ctx.blit(water_surf, water_rect.move(600, 40))
+        ctx.blit(oxy_surf, water_rect.move(600, 60))
+        ctx.blit(food_surf, food_rect.move(600, 80))
         for room in self.rooms:
             room.draw(ctx)
         for crew_member in self.crew:
