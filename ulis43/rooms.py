@@ -26,8 +26,8 @@ class Room():
             if pos:
                 crew_member.pos = pos
             else:
-                crew_member.pos = (random.randint(self.pos[0], self.pos[0] + 100),
-                                   random.randint(self.pos[1], self.pos[1] + 100))
+                crew_member.pos = (random.randint(self.pos[0] + 20, self.pos[0] + 80),
+                                   random.randint(self.pos[1] + 20, self.pos[1] + 60))
             self.staff.append(crew_member)
 
         return len(self.staff) < self.capacity
@@ -58,7 +58,7 @@ class Room():
             global_ressources = self.__electrical_plant_tick(global_ressources)
         elif self.type == "MACHINE_ROOM":
             global_ressources = self.__machine_room_tick(global_ressources)
-        else:  # self.type == "HQ":
+        elif self.type == "HQ":
             global_ressources = self.__hq_tick(global_ressources)
 
         global_ressources = self.__neighbour_effect_tick(global_ressources)
