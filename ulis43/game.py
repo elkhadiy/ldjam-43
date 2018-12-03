@@ -8,6 +8,7 @@ import ulis43
 import ulis43.rooms
 import ulis43.spaceship
 import ulis43.crew_member
+from ulis43.asset_manager import AssetManager
 
 
 class Game:
@@ -89,6 +90,8 @@ class Game:
             rooms=rooms
         )
 
+        self.last_grabbed = None
+
     def tick(self):
         if min(self.spaceship.ressources.values()) > 100:
             randroom = random.sample(self.spaceship.rooms, 1)[0]
@@ -111,14 +114,46 @@ class Game:
             pos = pygame.mouse.get_pos()
             self.grab_crew(pos)
         self.spaceship.draw(ctx)
+        if self.last_grabbed:
+            name_surf, name_rect = AssetManager().getFont("hud").render(
+                "NAME: {}".format(self.last_grabbed.name),
+                fgcolor=(251, 242, 54)
+            )
+            hp_surf, hp_rect = AssetManager().getFont("hud").render(
+                "HP: {}".format(self.last_grabbed.stats["hp"]),
+                fgcolor=(255, 0, 0)
+            )
+            elec_surf, elec_rect = AssetManager().getFont("hud").render(
+                "ENG: {0:.2f}".format(self.last_grabbed.skills["ENGINEERING"]),
+                fgcolor=(251, 242, 54)
+            )
+            water_surf, water_rect = AssetManager().getFont("hud").render(
+                "CHEM: {0:.2f}".format(self.last_grabbed.skills["COOKING"]),
+                fgcolor=(99, 155, 255)
+            )
+            oxy_surf, oxy_rect = AssetManager().getFont("hud").render(
+                "COOK: {0:.2f}".format(self.last_grabbed.skills["FARMING"]),
+                fgcolor=(138, 111, 48)
+            )
+            food_surf, food_rect = AssetManager().getFont("hud").render(
+                "FARM: {0:.2f}".format(self.last_grabbed.skills["CHEMISTRY"]),
+                fgcolor=(138, 111, 48)
+            )
+
+            ctx.blit(name_surf, name_rect.move(620, 220))
+            ctx.blit(hp_surf, hp_rect.move(620, 240))
+            ctx.blit(elec_surf, elec_rect.move(620, 260))
+            ctx.blit(water_surf, water_rect.move(620, 280))
+            ctx.blit(oxy_surf, water_rect.move(620, 300))
+            ctx.blit(food_surf, food_rect.move(620, 320))
 
 
     def grab_crew(self, pos):
         grabbed_crew_member = [
             member for member in self.spaceship.crew if member.grabbed
         ]
-
-        if grabbed_crew_member :
+        if grabbed_crew_member:
+            self.last_grabbed = grabbed_crew_member[0]
             grabbed_crew_member[0].grabbed = False
             hovered_room = [
                 room
@@ -138,10 +173,6 @@ class Game:
                 if member.pos[0] <= pos[0] and pos[0] <= member.pos[0] + 32
                 and member.pos[1] <= pos[1] and pos[1] <= member.pos[1] + 40
             ]
-
-            if crew_member and not crew_member[0].current_room:
-                return
-
             if crew_member:
                 crew_member[0].grabbed = True
                 crew_member[0].current_room.remove_crew_member(crew_member[0])
