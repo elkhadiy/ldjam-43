@@ -23,6 +23,8 @@ def run():
     gameover_screen = GameOverScreen()
     window = Window()
 
+    tick_rate = 250
+
     delta = 0
     quit = False
     start = False
@@ -53,9 +55,9 @@ def run():
                     quit = True
 
             before = pygame.time.get_ticks()
-            while delta > 250:
+            while delta > tick_rate:
                 gameover = g.tick()
-                delta -= 250
+                delta -= tick_rate
             window.draw(g)
             exectime = pygame.time.get_ticks() - before
             pygame.time.delay(17 - exectime)
