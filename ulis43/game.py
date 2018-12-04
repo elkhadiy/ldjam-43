@@ -82,6 +82,8 @@ class Game:
             crew.append(new_crew)
             randroom.add_crew_member(new_crew)
 
+        self.new_crew_counter = 0
+
         # Instanciate spaceship
 
         self.spaceship = ulis43.spaceship.Spaceship(
@@ -96,11 +98,13 @@ class Game:
         AssetManager().playMusic("Mall")
 
     def tick(self):
-        if min(self.spaceship.ressources.values()) > 100:
-            randroom = random.sample(self.spaceship.rooms, 1)[0]
+        self.new_crew_counter += 1
+        if self.new_crew_counter >= 50:
+            self.new_crew_counter = 0
             new_crew = createCrew()
-            randroom.add_crew_member(new_crew)
-            new_crew.current_room = randroom
+            hq_room = [room for room in self.spaceship.rooms if room.type == "HQ"][0]
+            hq_room.add_crew_member(new_crew)
+            new_crew.current_room = hq_room
             self.spaceship.crew.append(new_crew)
 
         self.spaceship.tick()
@@ -135,26 +139,26 @@ class Game:
                 crew_member = crew_member[0]
             name_surf, name_rect = AssetManager().getFont("hud").render(
                 crew_member.name,
-                fgcolor=(251, 242, 54)
+                fgcolor=(200, 200, 200)
             )
             hp_surf, hp_rect = AssetManager().getFont("hud").render(
                 "HP: {}".format(crew_member.stats["hp"]),
                 fgcolor=(255, 0, 0)
             )
             elec_surf, elec_rect = AssetManager().getFont("hud").render(
-                "ENG: {0:.2f}".format(crew_member.skills["ENGINEERING"]),
+                "ENG: {}".format(int(crew_member.skills["ENGINEERING"])),
                 fgcolor=(251, 242, 54)
             )
             water_surf, water_rect = AssetManager().getFont("hud").render(
-                "CHEM: {0:.2f}".format(crew_member.skills["COOKING"]),
+                "CHEM: {}".format(int(crew_member.skills["COOKING"])),
                 fgcolor=(99, 155, 255)
             )
             oxy_surf, oxy_rect = AssetManager().getFont("hud").render(
-                "COOK: {0:.2f}".format(crew_member.skills["FARMING"]),
+                "COOK: {}".format(int(crew_member.skills["FARMING"])),
                 fgcolor=(138, 111, 48)
             )
             food_surf, food_rect = AssetManager().getFont("hud").render(
-                "FARM: {0:.2f}".format(crew_member.skills["CHEMISTRY"]),
+                "FARM: {}".format(int(crew_member.skills["CHEMISTRY"])),
                 fgcolor=(138, 111, 48)
             )
 
