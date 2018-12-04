@@ -1,4 +1,4 @@
-# Lumdum dare 43
+# Ludum dare 43
 
 > Sacrifies must be made
 
