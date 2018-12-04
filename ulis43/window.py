@@ -18,6 +18,8 @@ class Window():
         AssetManager().loadFont("subtitle", "Rockprp/rockprp.ttf", 50)
 
         rooms_folder = ulis43.basedir / "res" / "images" / "rooms"
+        AssetManager().loadImage("bg", ulis43.basedir / "res" / "images" / "background.png")
+
         for room in rooms_folder.iterdir():
             AssetManager().loadImage(room.stem, "rooms/" + room.name)
 
@@ -34,7 +36,7 @@ class Window():
 
     def draw(self, game):
 
-        self.window.fill((0, 0, 0))
+        self.window.blit(AssetManager().getImage("bg"), (0,0))
 
         game.draw(self.window)
 
