@@ -150,7 +150,7 @@ class Game:
                 fgcolor=(251, 242, 54)
             )
             water_surf, water_rect = AssetManager().getFont("hud").render(
-                "CHEM: {}".format(int(crew_member.skills["COOKING"])),
+                "CHEM: {}".format(int(crew_member.skills["CHEMISTRY"])),
                 fgcolor=(99, 155, 255)
             )
             oxy_surf, oxy_rect = AssetManager().getFont("hud").render(
@@ -158,7 +158,7 @@ class Game:
                 fgcolor=(138, 111, 48)
             )
             food_surf, food_rect = AssetManager().getFont("hud").render(
-                "FARM: {}".format(int(crew_member.skills["CHEMISTRY"])),
+                "FARM: {}".format(int(crew_member.skills["COOKING"])),
                 fgcolor=(138, 111, 48)
             )
 
