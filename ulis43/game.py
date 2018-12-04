@@ -125,8 +125,14 @@ class Game:
             if member.pos[0] <= pos[0] + 8 and pos[0] <= member.pos[0] + 24
             and member.pos[1] <= pos[1] + 8 and pos[1] <= member.pos[1] + 24
         ]
-        if crew_member:
-            crew_member = crew_member[0]
+        grabbed_crew_member = [
+            member for member in self.spaceship.crew if member.grabbed
+        ]
+        if crew_member or grabbed_crew_member:
+            if grabbed_crew_member:
+                crew_member = grabbed_crew_member[0]
+            else:
+                crew_member = crew_member[0]
             name_surf, name_rect = AssetManager().getFont("hud").render(
                 crew_member.name,
                 fgcolor=(251, 242, 54)
@@ -159,7 +165,6 @@ class Game:
             ctx.blit(oxy_surf, water_rect.move(600, 300))
             ctx.blit(food_surf, food_rect.move(600, 320))
 
-
     def grab_crew(self, pos):
         grabbed_crew_member = [
             member for member in self.spaceship.crew if member.grabbed
@@ -177,7 +182,7 @@ class Game:
                 and room.pos[1] <= pos[1] and pos[1] <= room.pos[1] + 100
             ]
             if hovered_room:
-                hovered_room[0].add_crew_member(grabbed_crew_member[0])
+                hovered_room[0].add_crew_member(grabbed_crew_member[0], pos=pygame.mouse.get_pos())
             else:
                 hq_room = [room for room in self.spaceship.rooms if room.type == "HQ"][0]
                 hq_room.add_crew_member(grabbed_crew_member[0])
