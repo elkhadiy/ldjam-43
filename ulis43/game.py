@@ -182,7 +182,7 @@ class Game:
                 and room.pos[1] <= pos[1] and pos[1] <= room.pos[1] + 100
             ]
             if hovered_room:
-                hovered_room[0].add_crew_member(grabbed_crew_member[0])
+                hovered_room[0].add_crew_member(grabbed_crew_member[0], pos=pygame.mouse.get_pos())
             else:
                 hq_room = [room for room in self.spaceship.rooms if room.type == "HQ"][0]
                 hq_room.add_crew_member(grabbed_crew_member[0])
