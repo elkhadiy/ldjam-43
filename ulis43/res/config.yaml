@@ -46,8 +46,8 @@
           state: "NOMINAL"
 
       ressources:
-        OXYGEN: 100
-        WATER: 100
-        FOOD: 100
-        ELECTRICITY: 100
+        OXYGEN: 250
+        WATER: 500
+        FOOD: 250
+        ELECTRICITY: 250
 ...
