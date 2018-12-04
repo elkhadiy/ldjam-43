@@ -41,7 +41,7 @@ class AssetManager(object):
             self.sounds[name] = pygame.mixer.Sound( str(ulis43.basedir / "res" / "sounds" / path) )
 
         def loadMusic(self, name, path):
-            self.musics[name] = pygame.mixer.music.load( str(ulis43.basedir / "res" / "musics" / path) )
+            self.musics[name] =  str(ulis43.basedir / "res" / "musics" / path)
 
         def loadFont(self, name, path, size):
             self.fonts[name] = pygame.freetype.Font(str(ulis43.basedir / "res" / "fonts" / path), size)
@@ -50,10 +50,10 @@ class AssetManager(object):
         def playMusic(self, name):
             if (self.currentMusic != self.musics[name]):
                 if self.currentMusic:
-                    self.currentMusic.fadeout(100)
-                self.musics[name].play(-1)
+                    pygame.mixer.music.fadeout(100)
+                pygame.mixer.music.load(self.musics[name])
+                pygame.mixer.music.play(-1)
                 self.currentMusic = self.musics[name]
-                self.currentMusic.set_volume(100)
 
         def playSound(self, name):
             self.sounds[name].play()
