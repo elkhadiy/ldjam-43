@@ -49,9 +49,6 @@ class CrewMember():
         self.skillcolor = crew_appearance["colors"]["skills"][dominant_skill]
 
     def tick(self, global_ressources):
-        if self.state == "OUT_OF_SERVICE":
-            return global_ressources
-
         if self.state != "NOMINAL":
             self.stats["hp"] -= 1
         if self.stats["hp"] <= 0:
@@ -67,7 +64,7 @@ class CrewMember():
                     self.stats["hp"] -= 1
 
         x, y = self.pos
-        if not self.grabbed and self.current_room:
+        if not self.grabbed and self.current_room and not self.state == "OUT_OF_SERVICE":
 
             x += random.randint(-15,15)
             y += random.randint(-15,15)

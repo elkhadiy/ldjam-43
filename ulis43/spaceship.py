@@ -9,10 +9,10 @@ class Spaceship():
         self.rooms = rooms
 
     def tick(self):
-        for crew_member in self.crew:
-            self.ressources = crew_member.tick(self.ressources)
         for room in self.rooms:
             self.ressources = room.tick(self.ressources)
+        for crew_member in self.crew:
+            self.ressources = crew_member.tick(self.ressources)
 
     def draw(self, ctx):
         elec_surf, elec_rect = AssetManager().getFont("hud").render(

@@ -73,6 +73,7 @@ class Room():
         self.state = "NOMINAL"
 
         for crew in self.staff:
+            crew.stats["hp"] = 0
             crew.current_room = None
         self.staff = []
 

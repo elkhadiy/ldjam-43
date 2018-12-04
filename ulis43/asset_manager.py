@@ -49,9 +49,11 @@ class AssetManager(object):
 
         def playMusic(self, name):
             if (self.currentMusic != self.musics[name]):
-                self.currentMusic.fadeout(100)
+                if self.currentMusic:
+                    self.currentMusic.fadeout(100)
                 self.musics[name].play(-1)
                 self.currentMusic = self.musics[name]
+                self.currentMusic.set_volume(100)
 
         def playSound(self, name):
             self.sounds[name].play()
