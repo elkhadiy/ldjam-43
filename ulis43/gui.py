@@ -34,19 +34,19 @@ def run():
     pos = None
     g = Game()
 
-    while restart and not quit:
+    while not (start or quit):
+        for event_ in pygame.event.get():
+            if event_.type == QUIT:
+                quit = True
+            elif event_.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                title_screen.click_event(pos, "down")
+            elif event_.type == MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+                start = title_screen.click_event(pos, "up")
+        window.draw(title_screen)
 
-        while not (start or quit):
-            for event_ in pygame.event.get():
-                if event_.type == QUIT:
-                    quit = True
-                elif event_.type == MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    title_screen.click_event(pos, "down")
-                elif event_.type == MOUSEBUTTONUP:
-                    pos = pygame.mouse.get_pos()
-                    start = title_screen.click_event(pos, "up")
-            window.draw(title_screen)
+    while restart and not quit:
 
         while not (quit or gameover):
             for event_ in pygame.event.get():

@@ -1,5 +1,7 @@
 from ulis43.asset_manager import AssetManager
 
+import pygame
+
 
 class GameOverScreen():
 
@@ -10,29 +12,42 @@ class GameOverScreen():
         title_surf, title_rect = AssetManager().getFont("title").render(
             "GAMEOVER", fgcolor=(255, 255, 255), size=150
         )
-        center_x = title_rect.left + title_rect.width / 2
-        center_y = title_rect.top + title_rect.height / 2
-        delta_x = center_x - 400
-        delta_y = center_y - 300
-        ctx.blit(title_surf, title_rect.move(
-            title_rect.left - delta_x, title_rect.top + delta_y / 2
-        ))
+        ctx.blit(title_surf, title_rect.move(50, 0))
 
         white = (255, 255, 255)
-        yellow = (255, 255, 0)
+        black = (0, 0, 0)
         start_surf, start_rect = AssetManager().getFont("subtitle").render(
-            "RESTART", fgcolor=yellow if self.start else white
+            "RESTART", fgcolor=white, bgcolor=black
         )
-        center_x = start_rect.left + start_rect.width / 2
-        center_y = start_rect.top + start_rect.height / 2
-        delta_x = center_x - 400
-        delta_y = center_y - 300
         start_rect.move_ip(
-            start_rect.left - delta_x, start_rect.top - delta_y
+            start_rect.left + 300, start_rect.top + 300
         )
         ctx.blit(start_surf, start_rect)
 
         self.start_button_rect = start_rect
+
+        pos = pygame.mouse.get_pos()
+
+        if ((self.start_button_rect.left <= pos[0])
+            and (pos[0] <= self.start_button_rect.left + self.start_button_rect.width)
+            and (self.start_button_rect.top <= pos[1])
+            and (pos[1] <= self.start_button_rect.top + self.start_button_rect.height)):
+            delta = 15
+            start_rect.w += delta * 2
+            start_rect.h += delta * 2
+            start_rect.move_ip(-delta, -delta)
+            pygame.draw.rect(ctx, white, start_rect, 5)
+            if self.start:
+                buttonbg = pygame.Surface((start_rect.w, start_rect.h))
+                buttonbg.fill(white)
+                ctx.blit(buttonbg, start_rect)
+                start_surf, start_rect = AssetManager().getFont("subtitle").render(
+                    "RESTART", fgcolor=black, bgcolor=white
+                )
+                start_rect.move_ip(
+                    start_rect.left + 300, start_rect.top + 300
+                )
+                ctx.blit(start_surf, start_rect)
 
     def click_event(self, pos, event):
         self.start = (
